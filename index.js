@@ -27,6 +27,7 @@ dbConnect()
 
 // create the database and collection
 const Services = client.db('ExploreWorld').collection('service')
+const Reviews = client.db('ExploreWorld').collection('review')
 
 // service Post using post method in mongodb
 app.post('/service', async (req, res) => {
@@ -91,6 +92,34 @@ app.get('/service/:id', async (req, res) => {
 
     }
 })
+
+// Reviews function here for Post
+// service Post using post method in mongodb
+app.post('/review', async (req, res) => {
+    try {
+        const result = await Reviews.insertOne(req.body)
+        if (result.insertedId) {
+            res.send({
+                success: true,
+                message: `Successfully created the ${req.body.name} with this id ${result.insertedId}`
+            })
+        }
+        else {
+            res.send({
+                success: false,
+                error: "Couldn't create the product"
+            })
+        }
+
+    } catch (error) {
+        res.send({
+            success: false,
+            error: error.message
+        })
+    }
+})
+
+
 
 
 
