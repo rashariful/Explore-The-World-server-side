@@ -101,13 +101,13 @@ app.post('/review', async (req, res) => {
         if (result.insertedId) {
             res.send({
                 success: true,
-                message: `Successfully created the ${req.body.name} with this id ${result.insertedId}`
+                message: `Successfully Added Review with this id ${result.insertedId}`
             })
         }
         else {
             res.send({
                 success: false,
-                error: "Couldn't create the product"
+                error: "Couldn't Added The Review"
             })
         }
 
@@ -116,6 +116,25 @@ app.post('/review', async (req, res) => {
             success: false,
             error: error.message
         })
+    }
+})
+
+// this is get service function for server side
+app.get('/review', async (req, res) => {
+    try {
+        const cursor = Reviews.find({})
+        const review = await cursor.toArray()
+        res.send({
+            success: true,
+            data: review
+        })
+
+    } catch (error) {
+        res.send({
+            success: false,
+            error: error.message
+        })
+
     }
 })
 
