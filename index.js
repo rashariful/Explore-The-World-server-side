@@ -57,7 +57,7 @@ app.post('/service', async (req, res) => {
 // this is get service function for server side
 app.get('/service', async (req, res) => {
     try {
-        const cursor = Services.find({}).limit(3);
+        const cursor = Services.find({}).limit(3).sort({ year: -1, _id: -1 });
         const service = await cursor.toArray()
         res.send({
             success: true,
