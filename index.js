@@ -57,7 +57,7 @@ app.post('/service', async (req, res) => {
 // this is get service function for server side
 app.get('/service', async (req, res) => {
     try {
-        const cursor = Services.find({})
+        const cursor = Services.find({}).limit(3);
         const service = await cursor.toArray()
         res.send({
             success: true,
@@ -93,6 +93,7 @@ app.get('/service/:id', async (req, res) => {
     }
 })
 
+
 // Reviews function here for Post
 // service Post using post method in mongodb
 app.post('/review', async (req, res) => {
@@ -121,6 +122,13 @@ app.post('/review', async (req, res) => {
 
 // this is get service function for server side
 app.get('/review', async (req, res) => {
+    let query = {}
+    if(req.query.id){
+        query={
+            id: req.query.id
+        }
+    }
+    console.log(req.query.id);
     try {
         const cursor = Reviews.find({})
         const review = await cursor.toArray()
