@@ -1,5 +1,6 @@
 const express = require('express');
 const { MongoClient, ObjectId } = require('mongodb');
+const jwt = require('jsonwebtoken')
 const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 5000;
@@ -24,6 +25,16 @@ async function dbConnect() {
     }
 }
 dbConnect()
+
+// jwt token
+app.post('/jwt', (req, res)=>{
+    const user = req.body
+    const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "1h"})
+    res.send({token})
+})
+
+
+
 
 // create the database and collection
 const Services = client.db('ExploreWorld').collection('service')
@@ -211,6 +222,20 @@ app.patch("/review/:id", async (req, res) => {
         });
     }
 });
+
+// this is get service function for server side
+app.get('/review', async (req, res) => {
+    let query = {}
+    if(req.query.email){
+        query={
+            email: req.query.email
+        }
+    }
+    const cursor = Reviews.find(query)
+    const rv = await cursor.toArray()
+    res.send(rv)
+    
+})
 
 
 
