@@ -56,7 +56,15 @@ app.post('/service', async (req, res) => {
 
 // this is get service function for server side
 app.get('/service', async (req, res) => {
+    
     try {
+        console.log(req.query.route);
+        if(req.query.route){
+            return res.send({
+                success: true,
+                data: await Services.find({}).toArray()
+            })
+        }
         const cursor = Services.find({}).limit(3).sort({ year: -1, _id: -1 });
         const service = await cursor.toArray()
         res.send({
@@ -146,6 +154,63 @@ app.get('/review', async (req, res) => {
     }
 })
 
+// this is delete review function
+app.delete("/review/:id", async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const review = await Reviews.findOne({ _id: ObjectId(id) });
+
+        if (!review?._id) {
+            res.send({
+                success: false,
+                error: "review doesn't exist",
+            });
+            return;
+        }
+
+        const result = await Reviews.deleteOne({ _id: ObjectId(id) });
+
+        if (result.deletedCount) {
+            res.send({
+                success: true,
+                message: `Successfully deleted`,
+            });
+        } else {
+        }
+    } catch (error) {
+        res.send({
+            success: false,
+            error: error.message,
+        });
+    }
+});
+
+// this is update product function here 02 part
+app.patch("/review/:id", async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const result = await Reviews.updateOne({ _id: ObjectId(id) }, { $set: req.body });
+
+        if (result.matchedCount) {
+            res.send({
+                success: true,
+                message: `successfully updated`,
+            });
+        } else {
+            res.send({
+                success: false,
+                error: "Couldn't update  the product",
+            });
+        }
+    } catch (error) {
+        res.send({
+            success: false,
+            error: error.message,
+        });
+    }
+});
 
 
 
