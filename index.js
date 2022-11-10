@@ -12,6 +12,8 @@ app.use(express.json());
 
 // make uri for mongodb
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@exploreworld.fyzzpaq.mongodb.net/?retryWrites=true&w=majority`;
+
+// const uri = 'mongodb://localhost:27017'
 const client = new MongoClient(uri);
 
 // jwt function
@@ -236,53 +238,33 @@ app.get("/review/:id", async (req, res) => {
   res.send(review);
 });
 
-// app.get('/review/:id', async (req, res) => {
-//     try {
-//         const { id } = req.params
-//         const query = { _id: ObjectId(id) };
-//         const review = await Reviews.findOne(query)
-//         res.send({
-//             success: true,
-//             data: review
-//         })
+// this is review filter by email query
+app.get('/myreview', verifyJWT, async (req, res) => {
 
-//     } catch (error) {
-//         res.send({
-//             success: false,
-//             error: error.message
-//         })
-
-//     }
-// })
-
-// this is get Review function for server side
-app.get("/userreview", verifyJWT, async (req, res) => {
   const decoded = req.decoded;
+
   if (decoded.email !== req.query.email) {
-    res.status(403).send({ message: "unauthorized access" });
+    res.status(403).send({ message: 'unauthorized access' })
   }
+
+
 
   let query = {};
+  console.log(req.query.email);
+
   if (req.query.email) {
     query = {
-      email: req.query.email,
-    };
+      "user.email": req.query.email
+    }
   }
 
-  try {
-    const cursor = Reviews.find({});
-    const review = await cursor.toArray();
-    res.send({
-      success: true,
-      data: review,
-    });
-  } catch (error) {
-    res.send({
-      success: false,
-      error: error.message,
-    });
-  }
+  const cursor = Reviews.find(query);
+  const orders = await cursor.toArray();
+  res.send(orders);
 });
+
+
+
 
 app.get("/", (req, res) => {
   res.send("Assignment server up");
