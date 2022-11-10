@@ -1,5 +1,5 @@
 
-# Complete this project back-end and front-end using Node js, React js, firebase, and Tailwind CSS
+# Complete this project back-end and front-end using Node js, React js, firebase, and react flowbite
 
 This is an explore the world web application that has some services, you can choose different types of services here, 
 #### Don't forget to upgrade yourself today!
@@ -15,7 +15,7 @@ This is an explore the world web application that has some services, you can cho
  - [Github client side Code LInk](https://github.com/Porgramming-Hero-web-course/b6a11-service-review-client-side-rashariful)
  - [Github server side Code LInk](https://github.com/Porgramming-Hero-web-course/b6a11-service-review-server-side-rashariful)
  - [Live side LInk](https://the-edu-planner.web.app/)
-## The Edu Planner app's Features
+## Explore The World app's Features
 
 #### Those Futures for server side
 - Create a (Explore the world) server
