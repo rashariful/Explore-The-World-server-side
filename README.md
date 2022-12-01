@@ -12,8 +12,8 @@ This is an explore the world web application that has some services, you can cho
 
 ## Source code and liva LInk
 
- - [Github client side Code LInk](https://github.com/Porgramming-Hero-web-course/b6a11-service-review-client-side-rashariful)
- - [Github server side Code LInk](https://github.com/Porgramming-Hero-web-course/b6a11-service-review-server-side-rashariful)
+ - [Github client side Code LInk](https://github.com/rashariful/Explore-The-World-Client-side)
+ - [Github server side Code LInk](https://github.com/rashariful/Explore-The-World-server-side)
  - [Live side LInk](https://the-edu-planner.web.app/)
 ## Explore The World app's Features
 
